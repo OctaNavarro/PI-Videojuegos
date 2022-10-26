@@ -14,15 +14,25 @@ module.exports = sequelize => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    slug: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    image: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
     description: {
       type: DataTypes.STRING,
       allowNull: false,
     },
     released: {
       type: DataTypes.STRING,
+      allowNull: true,
     },
     rating: {
-      type: DataTypes.ENUM('1', '2', '3', '4', '5'),
+      type: DataTypes.FLOAT,
+      allowNull: true,
     },
     platforms: {
       type: DataTypes.STRING,
