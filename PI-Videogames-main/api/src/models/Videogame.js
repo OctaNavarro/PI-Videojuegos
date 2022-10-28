@@ -16,15 +16,16 @@ module.exports = sequelize => {
     },
     slug: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
     },
     image: {
       type: DataTypes.STRING,
-      allowNull: true
+      allowNull: true,
     },
     description: {
       type: DataTypes.STRING,
       allowNull: false,
+      defaultValue: '' 
     },
     released: {
       type: DataTypes.STRING,
@@ -33,10 +34,6 @@ module.exports = sequelize => {
     rating: {
       type: DataTypes.FLOAT,
       allowNull: true,
-    },
-    platforms: {
-      type: DataTypes.STRING,
-      allowNull: false,
     },
     createdInDb: {
       type: DataTypes.BOOLEAN,

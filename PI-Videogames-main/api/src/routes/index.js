@@ -4,7 +4,7 @@ const axios = require('axios')
 const { Op } = require('sequelize')
 const { API_KEY } = process.env
 const router = Router()
-const { Videogame, Genre } = require('../db')
+const { Videogame, Genre, Platforms } = require('../db')
 
 // Funciones para traer info de API y DB
 const getApiInfo = async name => {
@@ -20,7 +20,6 @@ const getApiInfo = async name => {
           name: e.name,
           image: e.background_image,
           genres: e.genres.map(e => e.name),
-          rating: e.rating,
         })
       })
       url = apiInfo.data.next
@@ -37,62 +36,78 @@ const getApiInfo = async name => {
         image: e.background_image,
         genres: e.genres.map(e => e.name),
         rating: e.rating,
+        platforms: e.platforms.map(e => e.platform.name),
       })
     })
   }
   return videojuegos
 }
 
-// const getDbInfo = async () => {
-//   return await Videogame.findAll({
-//     include: {
-//       model: Genre,
-//       attributes: ['name'],
-//       through: {
-//         attributes: [],
-//       },
-//     },
-//   })
-// }
-
-const getDbInfo = async name => {
+const getDbInfo = async () => {
   let myVideogames = []
 
-  if (!name) {
-    myVideogames = Videogame.findAll({
-      include: {
+  myVideogames = Videogame.findAll({
+    include: [
+      {
         model: Genre,
         attributes: ['name'],
         through: {
           attributes: [],
         },
       },
-    })
-    return myVideogames
-  } else {
-    myVideogames = Videogame.findAll({
-      include: {
-        model: Genre,
+      {
+        model: Platforms,
         attributes: ['name'],
         through: {
           attributes: [],
         },
       },
-      where: {
-        name: { [Op.iLike]: `%${name}%` },
-      },
-    })
-    return myVideogames
-  }
+    ],
+  })
+  return myVideogames
 }
 
 const getAllGames = async name => {
   const apiInfo = await getApiInfo(name)
   const dbInfo = await getDbInfo()
-  console.log(dbInfo)
+  //console.log(dbInfo)
   const infoTotal = apiInfo.concat(dbInfo)
 
   return infoTotal
+}
+
+//Función para pushear plataformas a DB
+const platsToDb = async () => {
+  const platsApi = await getApiInfo()
+  const plats = platsApi.map(e => e.platforms)
+  //console.log('Plataformas: ' + platsApi)
+  const platEach = []
+  plats.map(e => {
+    for (let i = 0; i < e.length; i++) platEach.push(e[i])
+  })
+
+  platEach.forEach(e => {
+    Platforms.findOrCreate({
+      where: { name: e },
+    })
+  })
+}
+
+//Función para pushear géneros a DB
+const genreToDb = async () => {
+  const genresApi = await getApiInfo()
+  const genres = genresApi.map(e => e.genres)
+  //console.log('Géneros: ' + genresApi)
+  const genreEach = []
+  genres.map(e => {
+    for (let i = 0; i < e.length; i++) genreEach.push(e[i])
+  })
+
+  genreEach.forEach(e => {
+    Genre.findOrCreate({
+      where: { name: e },
+    })
+  })
 }
 
 //Ruta GET/ videogames + ?name=...
@@ -112,23 +127,61 @@ router.get('/videogames', async (req, res) => {
   }
 })
 
-// Ruta /genre
+//Ruta GET/ genre
 router.get('/genre', async (req, res) => {
-  const genresApi = await getApiInfo()
-  const genres = genresApi.map(e => e.genres)
-  console.log(genres)
-  const genreEach = []
-  genres.map(e => {
-    for (let i = 0; i < e.length; i++) genreEach.push(e[i])
-  })
+  //Por ahora voy a poner las fucniones que cargan la DB acá
+  genreToDb()
+  platsToDb()
 
-  genreEach.forEach(e => {
-    Genre.findOrCreate({
-      where: { name: e },
-    })
-  })
   const allGenres = await Genre.findAll()
   res.send(allGenres)
+})
+//
+//Ruta GET/ videogame/{idVideogame}
+router.get('/videogame/:id', async (req, res) => {
+  const id = req.params.id
+
+  const getApiId = async name => {
+    const apiId = await axios.get(
+      `https://api.rawg.io/api/games/${name}?key=${API_KEY}`
+    )
+
+    let returnObj = {
+      id: apiId.data.id,
+      slug: apiId.data.slug,
+      name: apiId.data.name,
+      image: apiId.data.background_image,
+      genres: apiId.data.genres.map(e => e.name),
+      rating: apiId.data.rating,
+      platforms: apiId.data.platforms.map(e => e.platform.name),
+      description: apiId.data.description,
+    }
+    return returnObj
+  }
+
+  const getAllId = async id => {
+    let infoTotal = {}
+    if (id.length > 8) {
+      infoTotal = await getDbInfo()
+    } else {
+      infoTotal = await getApiId(id)
+    }
+    return infoTotal
+  }
+
+  const videogamesTotal = await getAllId(id)
+  if (id.length < 8) {
+    //console.log('VideogamesTotal: ' + videogamesTotal)
+    Object.keys(videogamesTotal).length !== 1 //REVISAR ACA
+      ? res.status(200).json(videogamesTotal)
+      : res.status(404).send('Videogame not found 1')
+  } else {
+    console.log('VideogamesTotal: ' + videogamesTotal)
+    let videogameId = await videogamesTotal.filter(e => e.id == id)
+    videogameId.length
+      ? res.status(200).json(videogameId)
+      : res.status(404).send('Videogame not found 2')
+  }
 })
 
 //Ruta POST/ videogames
@@ -152,15 +205,19 @@ router.post('/videogames', async (req, res) => {
     released,
     rating,
     image,
-    platforms,
     createdInDb,
   })
 
   let genreDb = await Genre.findAll({
     where: { name: genre },
   })
-
   videogameCreated.addGenre(genreDb)
+
+  let platformsDb = await Platforms.findAll({
+    where: { name: platforms },
+  })
+  videogameCreated.addPlatforms(platformsDb)
+
   res.send('Videogame created successfully')
 })
 
