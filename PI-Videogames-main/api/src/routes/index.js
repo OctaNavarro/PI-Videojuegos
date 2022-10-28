@@ -168,19 +168,19 @@ router.get('/videogame/:id', async (req, res) => {
     }
     return infoTotal
   }
-
-  const videogamesTotal = await getAllId(id)
-  if (id.length < 8) {
-    //console.log('VideogamesTotal: ' + videogamesTotal)
-    Object.keys(videogamesTotal).length !== 1 //REVISAR ACA
-      ? res.status(200).json(videogamesTotal)
-      : res.status(404).send('Videogame not found 1')
-  } else {
-    console.log('VideogamesTotal: ' + videogamesTotal)
-    let videogameId = await videogamesTotal.filter(e => e.id == id)
-    videogameId.length
-      ? res.status(200).json(videogameId)
-      : res.status(404).send('Videogame not found 2')
+  try {
+    const videogamesTotal = await getAllId(id)
+    if (id.length < 8) {
+      //console.log('VideogamesTotal: ' + videogamesTotal)
+      res.status(200).json(videogamesTotal)
+    } else {
+      let videogameId = await videogamesTotal.filter(e => e.id == id)
+      videogameId.length
+        ? res.status(200).json(videogameId)
+        : res.status(404).send('Videogame not found')
+    }
+  } catch (error) {
+    res.status(404).send(error.message)
   }
 })
 

@@ -63,3 +63,51 @@ async function get120() {
     }
   })
   
+
+  router.get('/videogame/:id', async (req, res) => {
+    const id = req.params.id
+  
+    const getApiId = async name => {
+      const apiId = await axios.get(
+        `https://api.rawg.io/api/games/${name}?key=${API_KEY}`
+      )
+  
+      let returnObj = {
+        id: apiId.data.id,
+        slug: apiId.data.slug,
+        name: apiId.data.name,
+        image: apiId.data.background_image,
+        genres: apiId.data.genres.map(e => e.name),
+        rating: apiId.data.rating,
+        platforms: apiId.data.platforms.map(e => e.platform.name),
+        description: apiId.data.description,
+      }
+      return returnObj
+    }
+  
+    const getAllId = async id => {
+      let infoTotal = {}
+      if (id.length > 8) {
+        infoTotal = await getDbInfo()
+      } else {
+        infoTotal = await getApiId(id)
+      }
+      return infoTotal
+    }
+  
+    const videogamesTotal = await getAllId(id)
+    if (id.length < 8) {
+      //console.log('VideogamesTotal: ' + videogamesTotal)
+      Object.keys(videogamesTotal).length < 9 //REVISAR ACA
+        ? res.status(200).json(videogamesTotal)
+        : res.status(404).send('Videogame not found 1')
+      console.log('VideogamesTotal: ' + videogamesTotal)
+    } else {
+      let videogameId = await videogamesTotal.filter(e => e.id == id)
+      videogameId.length
+        ? res.status(200).json(videogameId)
+        : res.status(404).send('Videogame not found 2')
+      console.log('VideogamesTotal: ' + videogamesTotal)
+    }
+  })
+  
