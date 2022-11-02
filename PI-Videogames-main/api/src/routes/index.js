@@ -19,7 +19,9 @@ const getApiInfo = async name => {
           id: e.id,
           name: e.name,
           image: e.background_image,
-          genres: e.genres.map(e => e.name),
+          genres: e.genres.map((e) => {return{name : e.name}}),
+          platforms: e.platforms.map((e) =>{ return {name: e.platform.name}}),
+          rating: e.rating,
         })
       })
       url = apiInfo.data.next
@@ -34,9 +36,9 @@ const getApiInfo = async name => {
         slug: e.slug,
         name: e.name,
         image: e.background_image,
-        genres: e.genres.map(e => e.name),
         rating: e.rating,
-        platforms: e.platforms.map(e => e.platform.name),
+        genres: e.genres.map((e) => {return{name : e.name}}),
+        platforms: e.platforms.map((e) =>{ return {name: e.platform.name}}),
       })
     })
   }
@@ -44,9 +46,8 @@ const getApiInfo = async name => {
 }
 
 const getDbInfo = async () => {
-  let myVideogames = []
-
-  myVideogames = Videogame.findAll({
+  
+  return await Videogame.findAll({
     include: [
       {
         model: Genre,
@@ -64,13 +65,13 @@ const getDbInfo = async () => {
       },
     ],
   })
-  return myVideogames
+  
 }
 
+//Función para juntar los juegos de DB y de API
 const getAllGames = async name => {
   const apiInfo = await getApiInfo(name)
   const dbInfo = await getDbInfo()
-  //console.log(dbInfo)
   const infoTotal = apiInfo.concat(dbInfo)
 
   return infoTotal
@@ -80,8 +81,8 @@ const getAllGames = async name => {
 const platsToDb = async () => {
   const platsApi = await getApiInfo()
   const plats = platsApi.map(e => e.platforms)
-  //console.log('Plataformas: ' + platsApi)
   const platEach = []
+
   plats.map(e => {
     for (let i = 0; i < e.length; i++) platEach.push(e[i])
   })
@@ -95,12 +96,14 @@ const platsToDb = async () => {
 
 //Función para pushear géneros a DB
 const genreToDb = async () => {
-  const genresApi = await getApiInfo()
-  const genres = genresApi.map(e => e.genres)
-  //console.log('Géneros: ' + genresApi)
+  const genresApi = await axios.get(
+    `https://api.rawg.io/api/genres?key=${API_KEY}`
+  )
+  const genres = genresApi.data.results.map(e => e.name)
   const genreEach = []
+
   genres.map(e => {
-    for (let i = 0; i < e.length; i++) genreEach.push(e[i])
+    genreEach.push(e)
   })
 
   genreEach.forEach(e => {
@@ -136,7 +139,13 @@ router.get('/genre', async (req, res) => {
   const allGenres = await Genre.findAll()
   res.send(allGenres)
 })
-//
+
+//Ruta GET/ platforms
+router.get('/platforms', async (req, res) => {
+  const allPlatforms = await Platforms.findAll()
+  res.send(allPlatforms)
+})
+
 //Ruta GET/ videogame/{idVideogame}
 router.get('/videogame/:id', async (req, res) => {
   const id = req.params.id

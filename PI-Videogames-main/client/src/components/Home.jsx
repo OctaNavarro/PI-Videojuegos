@@ -39,10 +39,12 @@ export default function Home() {
 
   function handleFilterGenre(e) {
     dispatch(filterVideogamesByGenre(e.target.value))
+    setCurrentPage(1)
   }
 
   function handleFilterCreated(e) {
     dispatch(filterCrated(e.target.value))
+    setCurrentPage(1)
   }
 
   function handleSortName(e) {
@@ -124,7 +126,7 @@ export default function Home() {
                     ? e.image
                     : 'https://w7.pngwing.com/pngs/537/580/png-transparent-super-mario-3d-land-super-mario-3d-world-new-super-mario-bros-super-mario-64-mario-heroes-nintendo-video-game.png'
                 }
-                genre={e.genres.map(e => e + ', ')}
+                genre={e.genres.map(e => e.name + ', ')}
               />
             </Link>
           </div>

@@ -14,7 +14,7 @@ export default function VideogameCreate() {
     genre: [],
     released: '',
     rating: 0,
-    image: 'https://w7.pngwing.com/pngs/537/580/png-transparent-super-mario-3d-land-super-mario-3d-world-new-super-mario-bros-super-mario-64-mario-heroes-nintendo-video-game.png',
+    image: '',
     developer: '',
     platforms: [],
     slug: '',

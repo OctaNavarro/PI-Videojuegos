@@ -1,11 +1,13 @@
 import React from 'react'
 
-export default function Paginado({ vgPerPage, allVideogames, paginado }) {
+export default function Paginado({ vgPerPage, allVideogames, paginado}) {
   const pageNumbers = []
 
   for (let i = 0; i < Math.ceil(allVideogames.length / vgPerPage); i++) {
     pageNumbers.push(i+1)
   }
+
+  
 
   return (
     <nav>

@@ -111,3 +111,89 @@ async function get120() {
     }
   })
   
+  //Función para pushear géneros a DB
+const genreToDb = async () => {
+  const genresApi = await getApiInfo()
+  const genres = genresApi.map(e => e.genres)
+  const genreEach = []
+  
+  genres.map(e => {
+    for (let i = 0; i < e.length; i++) genreEach.push(e[i])
+  })
+
+  genreEach.forEach(e => {
+    Genre.findOrCreate({
+      where: { name: e },
+    })
+  })
+}
+
+if(action.payload === NONE){
+  return {
+    ...state,
+    filteredVideogames : [...state.videogames]
+  }
+}else{ 
+  let filterByGenre = state.videogames.filter((x) => {
+    
+    // Revisamos el array.
+    for(let i = 0; i < x.genres.length; i++) {
+      if(x.genres[i].name === action.payload){
+        return true;
+      }
+    }
+    
+    return false; 
+    
+  });
+  
+  return {
+    ...state,
+    filteredVideogames: [...filterByGenre]
+  }
+}
+
+
+
+export const genreFilter =
+        action.payload === 'All'
+          ? allVideogames
+          : allVideogames.filter(e => {
+              for (let i = 0; i < e.genres.length; i++) {
+                if (e.genres[i].name === action.payload) {
+                  return true
+                }
+              }
+              return false
+            })
+      return {
+        ...state,
+        videogames: [...genreFilter]
+      }
+    default:
+      return state
+  }
+
+   export const getDbInfo = async () => {
+    let myVideogames = []
+  
+    myVideogames = Videogame.findAll({
+      include: [
+        {
+          model: Genre,
+          attributes: ['name'],
+          through: {
+            attributes: [],
+          },
+        },
+        {
+          model: Platforms,
+          attributes: ['name'],
+          through: {
+            attributes: [],
+          },
+        },
+      ],
+    })
+    return myVideogames
+  }
