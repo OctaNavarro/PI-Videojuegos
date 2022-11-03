@@ -1,12 +1,9 @@
 import React from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { getDetalle } from '../actions'
+import { getDetail } from '../actions'
 import { useEffect } from 'react'
 import img from '../Imagenes/mario3d.png'
-const imgUrl =
-  'https://w7.pngwing.com/pngs/537/580/png-transparent-super-mario-3d-land-super-mario-3d-world-new-super-mario-bros-super-mario-64-mario-heroes-nintendo-video-game.png'
-
 
 export default function Detail() {
   const dispatch = useDispatch()
@@ -16,7 +13,7 @@ export default function Detail() {
   console.log(myVideogame)
 
   useEffect(() => {
-    dispatch(getDetalle(id))
+    dispatch(getDetail(id))
   }, [])
 
   return (
@@ -32,7 +29,9 @@ export default function Detail() {
           />
           <h2>Rating: {myVideogame.rating}</h2>
           <h2>Release date: {myVideogame.released}</h2>
-          <h2>About: {myVideogame.description}</h2>
+          <h3 >About: </h3>
+          <div dangerouslySetInnerHTML={{__html: myVideogame.description}}/>
+          
           <h3>
             Genres:{' '}
             {!myVideogame.createdInDb

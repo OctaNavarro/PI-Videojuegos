@@ -10,7 +10,7 @@ export function getVideogames() {
   }
 }
 
-export function getDetalle(id) {
+export function getDetail(id) {
   return async function (dispatch) {
     console.log('detail')
     try {
