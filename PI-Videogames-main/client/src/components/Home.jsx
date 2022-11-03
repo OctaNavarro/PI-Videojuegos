@@ -14,6 +14,7 @@ import Paginado from './Paginado'
 import SearchBar from './SearchBar'
 import img from '../Imagenes/mario3d.png'
 
+
 export default function Home() {
   const dispatch = useDispatch()
   const allVideogames = useSelector(state => state.videogames)
@@ -124,7 +125,7 @@ export default function Home() {
                 image={
                   e.image.length > 0
                     ? e.image
-                    : 'https://w7.pngwing.com/pngs/537/580/png-transparent-super-mario-3d-land-super-mario-3d-world-new-super-mario-bros-super-mario-64-mario-heroes-nintendo-video-game.png'
+                    : img
                 }
                 genre={e.genres.map(e => e.name + ', ')}
               />

@@ -173,6 +173,7 @@ router.get('/videogame/:id', async (req, res) => {
       rating: apiId.data.rating,
       platforms: apiId.data.platforms.map(e => e.platform.name),
       description: apiId.data.description,
+      released: apiId.data.released
     }
     return returnObj
   }
@@ -194,7 +195,7 @@ router.get('/videogame/:id', async (req, res) => {
     } else {
       let videogameId = await videogamesTotal.filter(e => e.id == id)
       videogameId.length
-        ? res.status(200).json(videogameId)
+        ? res.status(200).json(videogameId[0])
         : res.status(404).send('Videogame not found')
     }
   } catch (error) {

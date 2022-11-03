@@ -11,13 +11,13 @@ function validate(input){
   }else if(!input.description){
     errors.description = 'Description is required'
   }
-  //else if(input.platforms.length === 0){
-  //  errors.platforms = 'Platforms is required'}
   else if(0 > input.rating || input.rating > 5){
     errors.rating = 'Rating must be a number between 0 and 5'
   }
   // else if(input.genre.length === 0){
   //   errors.genre = 'Genre is required'}
+  //else if(input.platforms.length === 0){
+  //  errors.platforms = 'Platforms is required'}
 
   return errors
 }
@@ -35,7 +35,7 @@ export default function VideogameCreate() {
     description: '',
     genre: [],
     released: '',
-    rating: 0,
+    rating: '',
     image: '',
     developer: '',
     platforms: [],
@@ -83,7 +83,7 @@ export default function VideogameCreate() {
     description: '',
     genre: [],
     released: '',
-    rating: 0,
+    rating: '',
     image: '',
     developer: '',
     platforms: [],
@@ -91,6 +91,14 @@ export default function VideogameCreate() {
     })
 
     history.push('/home')
+  }
+
+  function handleDelete(e){
+    setInput({
+      ...input,
+      genre: input.genre.filter(gen => gen !== e),
+      platforms: input.platforms.filter(plat=>plat!==e)
+    })
   }
 
   return (
@@ -169,6 +177,7 @@ export default function VideogameCreate() {
           <li>{input.genre.map(e => e + ' ,')}</li>
         </ul>
 
+
         <h4>Platforms: </h4>
         <select onChange={e => handleSelectPlatform(e)}>
           {platforms?.map(platforms => (
@@ -180,8 +189,23 @@ export default function VideogameCreate() {
           <li>{input.platforms.map(e => e + ' ,')}</li>
         </ul>
 
+
         <button type='submit' disabled = {Object.entries(errors).length !== 0}>Create Videogame!</button>
       </form>
+
+      {input.genre.map(e=>
+        <div className='divGenre'>
+          <p>{e}</p>
+          <button className = 'botonX' onClick={() => handleDelete(e)}>X</button>
+        </div>
+      )}
+
+        {input.platforms.map(e=>
+          <div className='divPlatforms'>
+            <p>{e}</p>
+            <button className = 'botonX' onClick={() => handleDelete(e)}>X</button>
+          </div>
+        )}
     </div>
   )
 }

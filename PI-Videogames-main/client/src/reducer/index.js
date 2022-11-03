@@ -1,7 +1,8 @@
 const initialState = {
   videogames: [],
   allVideogames: [],
-  genres: []
+  genres: [],
+  detail: []
 }
 
 function rootReducer(state = initialState, action) {
@@ -12,6 +13,11 @@ function rootReducer(state = initialState, action) {
         videogames: action.payload,
         allVideogames: action.payload,
       }
+    case 'GET_DETAIL':
+      return{
+        ...state,
+        detail: action.payload
+      }  
     case 'GET_GENRES_VIDEOGAMES':
       return{
         ...state,
@@ -54,9 +60,6 @@ function rootReducer(state = initialState, action) {
         action.payload === 'Created'
           ? todosLosJuegos.filter(e => e.createdInDb)
           : todosLosJuegos.filter(e => !e.createdInDb)
-      //console.log( todosLosJuegos)
-      //console.log( createdFilter)
-      //console.log(action.payload)
       return {
         ...state,
         videogames: action.payload === 'All' ? todosLosJuegos : createdFilter,

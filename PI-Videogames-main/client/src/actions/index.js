@@ -5,13 +5,29 @@ export function getVideogames() {
     var json = await axios.get('http://localhost:3001/videogames')
     return dispatch({
       type: 'GET_VIDEOGAMES',
-      payload: json.data, 
+      payload: json.data,
     })
+  }
+}
+
+export function getDetalle(id) {
+  return async function (dispatch) {
+    console.log('detail')
+    try {
+      let json = await axios.get('http://localhost:3001/videogame/' + id)
+      return dispatch({
+        type: 'GET_DETAIL',
+        payload: json.data,
+      })
+    } catch (error) {
+      console.log(error)
+    }
   }
 }
 
 export function getNameVideogames(name) {
   return async function (dispatch) {
+    console.log('name')
     try {
       let json = await axios.get(
         'http://localhost:3001/videogames?name=' + name
