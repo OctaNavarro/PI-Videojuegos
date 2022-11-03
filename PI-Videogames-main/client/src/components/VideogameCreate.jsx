@@ -1,12 +1,34 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useHistory } from 'react-router-dom'
-import { postVideogame, getGenres, getPlatforms } from '../actions/index'
+import { postVideogames, getGenres, getPlatforms } from '../actions/index'
 import { useDispatch, useSelector } from 'react-redux'
+
+function validate(input){
+  let errors = {}
+
+  if(!input.name){
+    errors.name = 'Name is required'
+  }else if(!input.description){
+    errors.description = 'Description is required'
+  }
+  //else if(input.platforms.length === 0){
+  //  errors.platforms = 'Platforms is required'}
+  else if(0 > input.rating || input.rating > 5){
+    errors.rating = 'Rating must be a number between 0 and 5'
+  }
+  // else if(input.genre.length === 0){
+  //   errors.genre = 'Genre is required'}
+
+  return errors
+}
 
 export default function VideogameCreate() {
   const dispatch = useDispatch()
+  const history = useHistory()
   const genres = useSelector(state => state.genres)
   const platforms = useSelector(state => state.platforms)
+
+  const [errors, setErrors] = useState({})
 
   const [input, setInput] = useState({
     name: '',
@@ -30,6 +52,10 @@ export default function VideogameCreate() {
       ...input,
       [e.target.name]: e.target.value,
     })
+    setErrors(validate({
+      ...input,
+      [e.target.name] : e.target.value
+    })) 
   }
 
   function handleSelectGenre(e) {
@@ -46,13 +72,34 @@ export default function VideogameCreate() {
     })
   }
 
+  function handleSubmit(e){
+  
+    e.preventDefault()
+    dispatch(postVideogames(input))
+    alert('Videogame created succesfully!')
+    
+    setInput({
+      name: '',
+    description: '',
+    genre: [],
+    released: '',
+    rating: 0,
+    image: '',
+    developer: '',
+    platforms: [],
+    slug: ''
+    })
+
+    history.push('/home')
+  }
+
   return (
     <div>
       <Link to='/home'>
         <button>Back</button>
       </Link>
       <h1>Create your Videogame!</h1>
-      <form>
+      <form onSubmit={handleSubmit}>
         <div>
           <label>Name:</label>
           <input
@@ -61,6 +108,7 @@ export default function VideogameCreate() {
             name='name'
             onChange={handleChange}
           />
+          {errors.name && (<p className='error'>{errors.name}</p>)}
         </div>
         <div>
           <label>Description:</label>
@@ -70,6 +118,7 @@ export default function VideogameCreate() {
             name='description'
             onChange={handleChange}
           />
+          {errors.description && (<p className='error'>{errors.description}</p>)}
         </div>
         <div>
           <label>Released:</label>
@@ -83,11 +132,12 @@ export default function VideogameCreate() {
         <div>
           <label>Rating:</label>
           <input
-            type='number'
+            type='text'
             value={input.rating}
             name='rating'
             onChange={handleChange}
           />
+          {errors.rating && (<p className='error'>{errors.rating}</p>)}
         </div>
         <div>
           <label>Image:</label>
@@ -114,22 +164,23 @@ export default function VideogameCreate() {
             <option value={genre.name}>{genre.name}</option>
           ))}
         </select>
+        {errors.genre && (<p className='error'>{errors.genre}</p>)}
         <ul>
           <li>{input.genre.map(e => e + ' ,')}</li>
         </ul>
 
         <h4>Platforms: </h4>
         <select onChange={e => handleSelectPlatform(e)}>
-          {console.log(platforms)}
           {platforms?.map(platforms => (
             <option value={platforms.name}>{platforms.name}</option>
           ))}
         </select>
+        {errors.platforms && (<p className='error'>{errors.platforms}</p>)}
         <ul>
           <li>{input.platforms.map(e => e + ' ,')}</li>
         </ul>
 
-        <button type='submit'>Create Videogame!</button>
+        <button type='submit' disabled = {Object.entries(errors).length !== 0}>Create Videogame!</button>
       </form>
     </div>
   )

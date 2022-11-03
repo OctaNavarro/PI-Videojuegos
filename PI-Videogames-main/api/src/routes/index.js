@@ -19,8 +19,12 @@ const getApiInfo = async name => {
           id: e.id,
           name: e.name,
           image: e.background_image,
-          genres: e.genres.map((e) => {return{name : e.name}}),
-          platforms: e.platforms.map((e) =>{ return {name: e.platform.name}}),
+          genres: e.genres.map(e => {
+            return { name: e.name }
+          }),
+          platforms: e.platforms.map(e => {
+            return { name: e.platform.name }
+          }),
           rating: e.rating,
         })
       })
@@ -37,8 +41,12 @@ const getApiInfo = async name => {
         name: e.name,
         image: e.background_image,
         rating: e.rating,
-        genres: e.genres.map((e) => {return{name : e.name}}),
-        platforms: e.platforms.map((e) =>{ return {name: e.platform.name}}),
+        genres: e.genres.map(e => {
+          return { name: e.name }
+        }),
+        platforms: e.platforms.map(e => {
+          return { name: e.platform.name }
+        }),
       })
     })
   }
@@ -46,7 +54,6 @@ const getApiInfo = async name => {
 }
 
 const getDbInfo = async () => {
-  
   return await Videogame.findAll({
     include: [
       {
@@ -65,7 +72,6 @@ const getDbInfo = async () => {
       },
     ],
   })
-  
 }
 
 //Función para juntar los juegos de DB y de API
@@ -84,7 +90,7 @@ const platsToDb = async () => {
   const platEach = []
 
   plats.map(e => {
-    for (let i = 0; i < e.length; i++) platEach.push(e[i])
+    for (let i = 0; i < e.length; i++) platEach.push(e[i].name)
   })
 
   platEach.forEach(e => {
@@ -135,9 +141,12 @@ router.get('/genre', async (req, res) => {
   //Por ahora voy a poner las fucniones que cargan la DB acá
   genreToDb()
   platsToDb()
-
-  const allGenres = await Genre.findAll()
-  res.send(allGenres)
+  try {
+    const allGenres = await Genre.findAll()
+    res.send(allGenres)
+  } catch (error) {
+    console.log(error)
+  }
 })
 
 //Ruta GET/ platforms

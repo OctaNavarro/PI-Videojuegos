@@ -5,7 +5,7 @@ export function getVideogames() {
     var json = await axios.get('http://localhost:3001/videogames')
     return dispatch({
       type: 'GET_VIDEOGAMES',
-      payload: json.data,
+      payload: json.data, 
     })
   }
 }
@@ -44,7 +44,6 @@ export function getPlatforms() {
   return async function (dispatch) {
     try {
       let json = await axios.get('http://localhost:3001/platforms')
-      console.log(json.data)
       return dispatch({
         type: 'GET_PLATFORMS_VIDEOGAMES',
         payload: json.data,

@@ -34,7 +34,7 @@ function rootReducer(state = initialState, action) {
           ? allVideogames
           : allVideogames.filter(e => {
               for (let i = 0; i < e.genres.length; i++) {
-                if (e.genres[i] === action.payload) return true
+                if (e.genres[i].name === action.payload) return true
               }
               return false
             })
