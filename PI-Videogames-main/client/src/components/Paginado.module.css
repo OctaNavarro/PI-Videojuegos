@@ -1,0 +1,17 @@
+.pages{
+  display: inline;
+  align-items: center;
+}
+.pagesNumbers{
+  font-size: 1em;
+  cursor: pointer;
+  margin:10px;
+  width: 50px;
+  border-radius: 30px;
+  align-items: center;
+  border: 0px;
+}
+
+.pagesNumbers:focus{
+  box-shadow: rgb(171, 107, 201) 3px 3px 6px 0px inset, rgba(102, 28, 98, 0.5) -3px -3px 6px 1px inset;
+}

@@ -5,6 +5,7 @@ import Home from './components/Home'
 import VideogameCreate from './components/VideogameCreate'
 import Detail from './components/Detail'
 
+
 function App() {
   return (
     <BrowserRouter>

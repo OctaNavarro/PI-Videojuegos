@@ -173,7 +173,7 @@ router.get('/videogame/:id', async (req, res) => {
       rating: apiId.data.rating,
       platforms: apiId.data.platforms.map(e => e.platform.name),
       description: apiId.data.description,
-      released: apiId.data.released
+      released: apiId.data.released,
     }
     return returnObj
   }

@@ -13,7 +13,9 @@ import VgCard from './Cards'
 import Paginado from './Paginado'
 import SearchBar from './SearchBar'
 import img from '../Imagenes/mario3d.png'
-
+import bgImg from '../Imagenes/jonathan-borba-ipmc5-Z-uwQ-unsplashLQ.jpg'
+import '../App.css'
+import styles from './Home.module.css'
 
 export default function Home() {
   const dispatch = useDispatch()
@@ -35,6 +37,7 @@ export default function Home() {
 
   function handleClick(e) {
     e.preventDefault()
+    console.log('soy un boton')
     dispatch(getVideogames())
   }
 
@@ -63,76 +66,84 @@ export default function Home() {
   }
 
   return (
-    <div>
-      <Link to='/videogames'>Create videogame</Link>
-      <button
-        onClick={e => {
-          handleClick(e)
-        }}
-      >
-        Reload Videogames
-      </button>
-      <div>
-        <select onChange={e => handleSortName(e)}>
-          <option value='asc'>A to Z</option>
-          <option value='desc'>Z to A</option>
-        </select>
-        <select onChange={e => handleSortRating(e)}>
-          <option value='worst'>Worst to best</option>
-          <option value='best'>Best to worst</option>
-        </select>
-        <select onChange={e => handleFilterGenre(e)}>
-          <option value='All'>ALL</option>
-          <option value='Action'>ACTION</option>
-          <option value='Adventure'>ADVENTURE</option>
-          <option value='Indie'>INDIE</option>
-          <option value='RPG'>RPG</option>
-          <option value='Strategy'>STRATEGY</option>
-          <option value='Shooter'>SHOOTER</option>
-          <option value='Casual'>CASUAL</option>
-          <option value='Simulation'>SIMULATION</option>
-          <option value='Puzzle'>PUZZLE</option>
-          <option value='Arcade'>ARCADE</option>
-          <option value='Platformer'>PLATFORMER</option>
-          <option value='Racing'>RACING</option>
-          <option value='Massively Multiplayer'>MMO</option>
-          <option value='Sports'>SPORTS</option>
-          <option value='Fighting'>FIGHTING</option>
-          <option value='Family'>FAMILY</option>
-          <option value='Educational'>EDUCATIONAL</option>
-          <option value='Card'>CARD</option>
-          <option value='Board Games'>BOARD GAMES</option>
-        </select>
-        <select onChange={e => handleFilterCreated(e)}>
-          <option value='All'>All</option>
-          <option value='Existing'>Exisisting</option>
-          <option value='Created'>Created</option>
-        </select>
+    <div className={styles.bg}>
+      <div className={styles.nav}>
+        <button
+          onClick={e => {
+            handleClick(e)
+          }}
+          className={styles.boton}
+        >
+          <img src={bgImg} className={styles.bgImg} alt='bg' />
+        </button>
+        <Link to='/videogames'>Create videogame</Link>
 
-        <Paginado
+        <div>
+          <select onChange={e => handleSortName(e)}>
+            <option value='asc'>A to Z</option>
+            <option value='desc'>Z to A</option>
+          </select>
+          <select onChange={e => handleSortRating(e)}>
+            <option value='worst'>Worst to best</option>
+            <option value='best'>Best to worst</option>
+          </select>
+          <select onChange={e => handleFilterGenre(e)}>
+            <option value='All'>ALL</option>
+            <option value='Action'>ACTION</option>
+            <option value='Adventure'>ADVENTURE</option>
+            <option value='Indie'>INDIE</option>
+            <option value='RPG'>RPG</option>
+            <option value='Strategy'>STRATEGY</option>
+            <option value='Shooter'>SHOOTER</option>
+            <option value='Casual'>CASUAL</option>
+            <option value='Simulation'>SIMULATION</option>
+            <option value='Puzzle'>PUZZLE</option>
+            <option value='Arcade'>ARCADE</option>
+            <option value='Platformer'>PLATFORMER</option>
+            <option value='Racing'>RACING</option>
+            <option value='Massively Multiplayer'>MMO</option>
+            <option value='Sports'>SPORTS</option>
+            <option value='Fighting'>FIGHTING</option>
+            <option value='Family'>FAMILY</option>
+            <option value='Educational'>EDUCATIONAL</option>
+            <option value='Card'>CARD</option>
+            <option value='Board Games'>BOARD GAMES</option>
+          </select>
+          <select onChange={e => handleFilterCreated(e)}>
+            <option value='All'>All</option>
+            <option value='Existing'>Exisisting</option>
+            <option value='Created'>Created</option>
+          </select>
+
+        <SearchBar />
+        </div>
+      </div>
+          <Paginado
+            vgPerPage={vgPerPage}
+            allVideogames={allVideogames}
+            paginado={paginado}
+          />
+      <div className={styles.cardContainer}>
+        {currentVgs?.map(e => {
+          return (
+            <div>
+              <Link to={'/home/' + e.id}>
+                <VgCard
+                  name={e.name}
+                  image={e.image.length > 0 ? e.image : img}
+                  genre={e.genres.map(e => e.name + '  ')}
+                />
+              </Link>
+            </div>
+          )
+        })}
+      </div>
+        <Paginado 
           vgPerPage={vgPerPage}
           allVideogames={allVideogames}
           paginado={paginado}
+          className={styles.pagBottom}
         />
-      </div>
-      <SearchBar />
-      {currentVgs?.map(e => {
-        return (
-          <div>
-            <Link to={'/home/' + e.id}>
-              <VgCard
-                name={e.name}
-                image={
-                  e.image.length > 0
-                    ? e.image
-                    : img
-                }
-                genre={e.genres.map(e => e.name + ', ')}
-              />
-            </Link>
-          </div>
-        )
-      })}
     </div>
   )
 }

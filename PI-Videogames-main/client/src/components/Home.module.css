@@ -1,0 +1,57 @@
+.bg{
+  Width: 100%;
+  Height: 350vh;
+  background-image:
+    radial-gradient(
+      circle at top,
+      rgb(71, 71, 71),
+      #303030 50%
+    );
+    position:relative
+}
+
+.bgImg{
+  height: 150px;
+  width: auto;
+  border-radius: 40px;
+  position: absolute;
+  right: 2.5%; 
+  top: 0px; 
+  cursor: pointer;
+}
+
+.nav{
+  height: 150px;
+  width: auto;
+  background-image:
+  radial-gradient(
+    circle at left,
+    rgb(48, 0, 44),
+    #000000 50%
+  );
+  margin-bottom: 50px;
+}
+
+.boton{
+  height: 0px;
+  width:0px;
+  padding: 0px;
+  margin: 0px;
+  border: 0px;
+}
+
+.cardContainer{
+  display: grid;
+  grid-template-columns: repeat(3, 400px);
+  grid-template-rows: repeat(5, 500px);
+  position: relative;
+  justify-content: center;
+  align-items: center bottom;
+}
+
+.pagBottom{
+  display: flex;
+  justify-content: center;
+  }
+
+  

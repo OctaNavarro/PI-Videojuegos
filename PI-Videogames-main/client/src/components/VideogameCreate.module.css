@@ -1,0 +1,109 @@
+.bg{
+  Width: 100%;
+  Height: 150vh;
+  background-image:
+    radial-gradient(
+      circle at top,
+      rgb(71, 71, 71),
+      #303030 50%
+    );
+    position:relative
+}
+
+.bgImg{
+  height: 150px;
+  width: auto;
+  border-radius: 40px;
+  position: absolute;
+  right: 2.5%; 
+  top: 0px; 
+  cursor: pointer;
+}
+
+.nav{
+  height: 150px;
+  width: auto;
+  background-image:
+  radial-gradient(
+    circle at left,
+    rgb(48, 0, 44),
+    #000000 50%
+  );
+
+}
+
+.botonBack{
+  height: 0px;
+  width:0px;
+  padding: 0px;
+  margin: 0px;
+  border: 0px;
+}
+
+label{
+  padding-right: 20px;
+  position:absolute;
+  left: 10px
+}
+
+input{
+  border:0px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+.title{
+  font-size: 3em;
+  font-weight: bold;
+  color:rgba(238, 130, 238, 0.514);
+  margin-top: 40px;
+  
+}
+.container{
+  height: 650px;
+  width:400px;
+  background-color:rgb(241, 197, 241);
+  padding-top: 25px;
+  margin-top: 20px;
+  border-radius: 40px;
+  position: relative;
+  left: 40%
+}
+.submitBtn{
+  font-size: 1.2em;
+  font-weight: bold;
+  border: 2px;
+  height: 60px;
+  width: 180px;
+  border-radius: 50px;
+  position: absolute;
+  bottom: 50px;
+  left: 120px;
+  cursor: pointer
+  
+}
+
+.submitBtn:disabled{
+  
+  color: rgb(255, 206, 206);
+  background-color: rgb(255, 0, 0);
+  cursor:default
+}
+
+p{
+  background-color: azure;
+  border-radius: 10px;
+  border-color: red
+}
+
+.listaCont{
+  height: 500px;
+  width:200px;
+  background-color:rgb(241, 197, 241);
+  padding-top: 25px;
+  margin-top: 20px;
+  border-radius: 40px;
+  position: relative;
+  left: 65%;
+  bottom: 45%;
+}
