@@ -7,6 +7,7 @@ import {
   filterCrated,
   orderByName,
   orderByRating,
+  getGenres,
 } from '../actions'
 import { Link } from 'react-router-dom'
 import VgCard from './Cards'
@@ -31,9 +32,8 @@ export default function Home() {
     setCurrentPage(pageNumber)
   }
 
-  useEffect(() => {
-    dispatch(getVideogames())
-  }, [dispatch])
+  
+  
 
   function handleClick(e) {
     e.preventDefault()
@@ -65,7 +65,13 @@ export default function Home() {
     setRender(`Render ${e.target.value}`)
   }
 
+  useEffect(() => {
+    dispatch(getVideogames())
+    dispatch(getGenres())
+  }, [])
+
   return (
+
     <div className={styles.bg}>
       <div className={styles.nav}>
         <button
@@ -76,18 +82,36 @@ export default function Home() {
         >
           <img src={bgImg} className={styles.bgImg} alt='bg' />
         </button>
-        <Link to='/videogames'>Create videogame</Link>
-
+        <div className={styles.createBtnContainer}>
+          <Link to='/videogames' className={styles.createBtn}>
+            Create videogame!
+          </Link>
+        </div>
         <div>
-          <select onChange={e => handleSortName(e)}>
+          <select onChange={e => handleSortName(e)} className={styles.selector}>
+            <option disabled selected>
+              Alphabetical order
+            </option>
             <option value='asc'>A to Z</option>
             <option value='desc'>Z to A</option>
           </select>
-          <select onChange={e => handleSortRating(e)}>
+          <select
+            onChange={e => handleSortRating(e)}
+            className={styles.selector}
+          >
+            <option disabled selected>
+              Rating order
+            </option>
             <option value='worst'>Worst to best</option>
             <option value='best'>Best to worst</option>
           </select>
-          <select onChange={e => handleFilterGenre(e)}>
+          <select
+            onChange={e => handleFilterGenre(e)}
+            className={styles.selector}
+          >
+            <option disabled selected>
+              Genre filter
+            </option>
             <option value='All'>ALL</option>
             <option value='Action'>ACTION</option>
             <option value='Adventure'>ADVENTURE</option>
@@ -109,41 +133,51 @@ export default function Home() {
             <option value='Card'>CARD</option>
             <option value='Board Games'>BOARD GAMES</option>
           </select>
-          <select onChange={e => handleFilterCreated(e)}>
+          <select
+            onChange={e => handleFilterCreated(e)}
+            className={styles.selector}
+          >
+            <option disabled selected>
+              Status filter
+            </option>
             <option value='All'>All</option>
             <option value='Existing'>Exisisting</option>
             <option value='Created'>Created</option>
           </select>
 
-        <SearchBar />
+          <SearchBar />
         </div>
       </div>
-          <Paginado
-            vgPerPage={vgPerPage}
-            allVideogames={allVideogames}
-            paginado={paginado}
-          />
+      <Paginado
+        vgPerPage={vgPerPage}
+        allVideogames={allVideogames}
+        paginado={paginado}
+      />
       <div className={styles.cardContainer}>
-        {currentVgs?.map(e => {
-          return (
-            <div>
-              <Link to={'/home/' + e.id}>
-                <VgCard
-                  name={e.name}
-                  image={e.image.length > 0 ? e.image : img}
-                  genre={e.genres.map(e => e.name + '  ')}
-                />
-              </Link>
-            </div>
-          )
-        })}
+        {currentVgs.length > 0 ? (
+          currentVgs?.map(e => {
+            return (
+              <div>
+                <Link to={'/home/' + e.id}>
+                  <VgCard
+                    name={e.name}
+                    image={e.image.length > 0 ? e.image : img}
+                    genre={e.genres.map(e => e.name + '  ')}
+                  />
+                </Link>
+              </div>
+            )
+          })
+        ) : (
+          <div className = {styles.loading}>Loading...</div>
+        )}
       </div>
-        <Paginado 
-          vgPerPage={vgPerPage}
-          allVideogames={allVideogames}
-          paginado={paginado}
-          className={styles.pagBottom}
-        />
+      <Paginado
+        vgPerPage={vgPerPage}
+        allVideogames={allVideogames}
+        paginado={paginado}
+        className={styles.pagBottom}
+      />
     </div>
   )
 }

@@ -9,8 +9,6 @@ export default function Paginado({ vgPerPage, allVideogames, paginado}) {
     pageNumbers.push(i+1)
   }
 
-  
-
   return (
     <nav>
       <ul >

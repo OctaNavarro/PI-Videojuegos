@@ -1,6 +1,6 @@
 .bg{
   Width: 100%;
-  Height: 350vh;
+  Height: 325vh;
   background-image:
     radial-gradient(
       circle at top,
@@ -18,6 +18,10 @@
   right: 2.5%; 
   top: 0px; 
   cursor: pointer;
+}
+
+.bgImg:hover{
+  box-shadow: rgba(0, 255, 255, 0.4) 0px 2px 1px, rgba(0, 255, 255, 0.3) 0px 4px 2px, rgba(177, 40, 147, 0.2) 0px 8px 4px, rgba(177, 40, 147, 0.2) 0px 16px 8px, rgba(177, 40, 147, 0.2) 0px 32px 16px;
 }
 
 .nav{
@@ -54,4 +58,41 @@
   justify-content: center;
   }
 
-  
+.selector{
+  border: 1px solid rgb(228, 97, 228);
+  margin-left: 5px;
+  cursor: pointer;
+}
+ 
+.createBtnContainer{
+  display:inline-block;
+  height: 50px;
+  width: 200px;
+  background-color: rgba(0, 255, 255, 0.842);
+  border-radius: 40px;
+  position:absolute;
+  left:100px;
+  top: 50px;
+  transition: box-shadow 200ms
+}
+.createBtn{
+  color: rgb(228, 97, 228);
+  font-size: 1.3em;
+  font-weight: 800;
+  position:absolute;
+  left:10px;
+  top: 10%;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.createBtnContainer:hover{
+  box-shadow: rgba(177, 40, 147, 0.2) 0px 2px 1px, rgba(177, 40, 147, 0.2) 0px 4px 2px, rgba(177, 40, 147, 0.2) 0px 8px 4px, rgba(177, 40, 147, 0.2) 0px 16px 8px, rgba(177, 40, 147, 0.2) 0px 32px 16px;
+}
+
+.loading{
+  font-size: 3em;
+  color: rgb(0, 255, 255, 0.842);
+  position:fixed;
+  left: 45%
+}

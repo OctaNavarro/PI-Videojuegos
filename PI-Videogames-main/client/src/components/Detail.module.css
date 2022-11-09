@@ -1,0 +1,131 @@
+.bg{
+  Width: 100%;
+  Height: 200vh;
+  background-image:
+    radial-gradient(
+      circle at top,
+      rgb(71, 71, 71),
+      #303030 50%
+    );
+    position:relative
+}
+
+.bgImg{
+  height: 150px;
+  width: auto;
+  border-radius: 40px;
+  position: absolute;
+  right: 2.5%; 
+  top: 0px; 
+  cursor: pointer;
+}
+
+.bgImg:hover{
+  box-shadow: rgba(0, 255, 255, 0.4) 0px 2px 1px, rgba(0, 255, 255, 0.3) 0px 4px 2px, rgba(177, 40, 147, 0.2) 0px 8px 4px, rgba(177, 40, 147, 0.2) 0px 16px 8px, rgba(177, 40, 147, 0.2) 0px 32px 16px;
+}
+
+.nav{
+  height: 150px;
+  width: auto;
+  background-image:
+  radial-gradient(
+    circle at left,
+    rgb(48, 0, 44),
+    #000000 50%
+  );
+  margin-bottom: 50px;
+}
+
+.botonBack{
+  height: 0px;
+  width:0px;
+  padding: 0px;
+  margin: 0px;
+  border: 0px;
+}
+
+.container{
+  width: 700px;
+  height: auto;
+  border-radius: 40px;
+  background-color: rgb(253, 234, 253);
+  position: absolute;
+  left: 30%;
+  margin: 0;
+  padding: 0;
+}
+
+.img{
+  position: relative;
+  top: 0px;
+  left: 0px;
+  width: 700px;
+  height: 400px;
+  object-fit: cover;
+  border-top-left-radius:40px;
+  border-top-right-radius:40px;
+}
+
+#description{
+  padding-left: 25px;
+  padding-right: 25px;
+  background-color:rgb(236, 191, 234);
+}
+
+.title{
+  font-size: 2em;
+  font-weight: bold;
+  color:coral
+}
+
+.rr{
+  font-size: 0.8em;
+  display: flex;
+  position: relative;  
+  height: 50px;
+  background-color: rgb(182, 141, 202);
+}
+
+.ratingDiv{
+  display: inline-block;
+  position: absolute;
+  right: 20px;
+  top: 0px;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  background-color: coral;
+}
+
+.rating{
+  color: rgb(75, 37, 24);
+  font-size: 1.5em;
+  font-weight: bold;
+  line-height: 50px;
+  top: 5px;
+  right:7px;
+}
+
+.releaseDiv{
+  display: inline-block;
+  height: 50px;
+  width: 200px;
+  position:absolute;
+  background-color: coral;
+  border-radius: 25px;
+}
+
+.release{
+  position: absolute;
+  top:5px;
+  right: 60px;
+  font-size: 1.5em;
+  color: rgb(75, 37, 24);
+}
+
+.genYPlat{
+  background-color: rgb(255, 203, 184);
+  border-bottom-right-radius: 40px ;
+  border-bottom-left-radius: 40px ;
+}
+

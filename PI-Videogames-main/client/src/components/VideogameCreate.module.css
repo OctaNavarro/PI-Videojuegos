@@ -20,6 +20,10 @@
   cursor: pointer;
 }
 
+.bgImg:hover{
+  box-shadow: rgba(0, 255, 255, 0.4) 0px 2px 1px, rgba(0, 255, 255, 0.3) 0px 4px 2px, rgba(177, 40, 147, 0.2) 0px 8px 4px, rgba(177, 40, 147, 0.2) 0px 16px 8px, rgba(177, 40, 147, 0.2) 0px 32px 16px;
+}
+
 .nav{
   height: 150px;
   width: auto;
@@ -56,7 +60,12 @@ input{
   font-size: 3em;
   font-weight: bold;
   color:rgba(238, 130, 238, 0.514);
-  margin-top: 40px;
+  padding: 0px;
+  margin: 0px;
+  border: 0px;
+  position: absolute;
+  top: 35px;
+  left: 10px;
   
 }
 .container{
@@ -67,12 +76,13 @@ input{
   margin-top: 20px;
   border-radius: 40px;
   position: relative;
-  left: 40%
+  left: 35%
 }
 .submitBtn{
   font-size: 1.2em;
   font-weight: bold;
-  border: 2px;
+  border: 2px solid;
+  border-color: #000000;
   height: 60px;
   width: 180px;
   border-radius: 50px;
@@ -86,19 +96,21 @@ input{
 .submitBtn:disabled{
   
   color: rgb(255, 206, 206);
+  border: 0px;
   background-color: rgb(255, 0, 0);
   cursor:default
 }
 
-p{
+.error{
+  border: 1px solid red;
   background-color: azure;
   border-radius: 10px;
-  border-color: red
 }
 
 .listaCont{
-  height: 500px;
-  width:200px;
+  height: auto;
+  width:220px;
+  min-height: 200px;
   background-color:rgb(241, 197, 241);
   padding-top: 25px;
   margin-top: 20px;
@@ -106,4 +118,58 @@ p{
   position: relative;
   left: 65%;
   bottom: 45%;
+}
+
+.lista{
+  font-weight: bold;
+}
+
+.btnYEl{
+  display: flex;
+  align-items: center;
+}
+
+.genre{
+  padding: 10px;
+  width:220px;
+  font-size: 1em;
+  background-color: azure;
+  display:block;
+  border-radius: 40px
+
+}
+
+.platform{
+  padding: 10px;
+  width:220px;
+  font-size: 1em;
+  background-color: azure;
+  display:block;
+  border-radius: 40px
+}
+
+.botonX{
+  font-size: 1em;
+  font-weight: bold;
+  display:inline;
+  position:absolute;
+  width: 40px;
+  height: 25px;
+  right: 5px;
+  padding-bottom:30px;
+  border: 0;
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: red;
+  color: rgb(255, 206, 206)
+}
+
+.botonX:hover{
+  border: 1px solid;
+  border-color: #000000;
+}
+
+select{
+  border-radius: 10px;
+  border: 0px;
 }

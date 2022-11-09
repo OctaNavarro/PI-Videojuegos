@@ -12,24 +12,26 @@ function validate(input) {
   if (!input.name || input.name === '') {
     errors.name = 'Name is required'
     errors.button = true
+  } else if (!/^[a-zA-Z\s]*$/.test(input.name)) {
+    errors.name = 'Only letters allowed'
+    errors.button = true
   } else if (!input.description || input.description === '') {
     errors.description = 'Description is required'
     errors.button = true
-  } else if (
+  } else if (!input.released || input.released === '') {
+    errors.description = 'Date is required'
+    errors.button = true
+  }
+  else if (
+    !input.rating ||
     0 > input.rating ||
     input.rating > 5 ||
     typeof Number(input.rating) !== 'number'
   ) {
     errors.rating = 'Rating must be a number between 0 and 5'
     errors.button = true
+    console.log(input.genre)
   } 
-  // else if (input.genre.length === 0) {
-  //   errors.genre = 'Genre is required'
-  //   errors.button = true
-  // }
-  //else if(input.platforms.length === 0){
-  //  errors.platforms = 'Platforms is required'}
-
   return errors
 }
 
@@ -74,15 +76,27 @@ export default function VideogameCreate() {
   function handleSelectGenre(e) {
     setInput({
       ...input,
-      genre: [...input.genre, e.target.value],
+      genre: [...new Set([...input.genre, e.target.value])],
     })
+    setErrors(
+      validate({
+        ...input,
+        [e.target.name]: e.target.value,
+      })
+    )
   }
 
   function handleSelectPlatform(e) {
     setInput({
       ...input,
-      platforms: [...input.platforms, e.target.value],
+      platforms: [...new Set([...input.platforms, e.target.value])],
     })
+    setErrors(
+      validate({
+        ...input,
+        [e.target.name]: e.target.value,
+      })
+    )
   }
 
   function handleSubmit(e) {
@@ -116,18 +130,19 @@ export default function VideogameCreate() {
   return (
     <div className={styles.bg}>
       <div className={styles.nav}>
+        <h1 className={styles.title}>Create your own Videogame!</h1>
         <Link to='/home'>
           <button className={styles.botonBack}>
             <img src={bgImg} className={styles.bgImg} alt='bg' />
           </button>
         </Link>
       </div>
-      <h1 className={styles.title}>Create your own Videogame!</h1>
       <div className={styles.container}>
         <form onSubmit={handleSubmit}>
           <div>
             <label>Name:</label>
             <input
+              required 
               type='text'
               value={input.name}
               name='name'
@@ -150,7 +165,7 @@ export default function VideogameCreate() {
           <div>
             <label>Released:</label>
             <input
-              type='text'
+              type='date'
               value={input.released}
               name='released'
               onChange={handleChange}
@@ -159,7 +174,8 @@ export default function VideogameCreate() {
           <div>
             <label>Rating:</label>
             <input
-              type='text'
+              type='number'
+              min = '1'
               value={input.rating}
               name='rating'
               onChange={handleChange}
@@ -187,17 +203,20 @@ export default function VideogameCreate() {
 
           <h4>Genres: </h4>
           <select onChange={e => handleSelectGenre(e)}>
+            <option disabled selected>
+              -----------
+            </option>
             {genres?.map(genre => (
               <option value={genre.name}>{genre.name}</option>
             ))}
           </select>
           {errors.genre && <p className={styles.error}>{errors.genre}</p>}
-          <ul>
-            <li>{input.genre.map(e => e + ' ,')}</li>
-          </ul>
 
           <h4>Platforms: </h4>
           <select onChange={e => handleSelectPlatform(e)}>
+            <option disabled selected>
+              -----------
+            </option>
             {platforms?.map(platforms => (
               <option value={platforms.name}>{platforms.name}</option>
             ))}
@@ -217,22 +236,21 @@ export default function VideogameCreate() {
             Create Videogame!
           </button>
         </form>
-
       </div>
       <div className={styles.listaCont}>
-      <p className={styles.lista}>Genres selected:</p>
+        <p className={styles.lista}>Genres selected:</p>
         {input.genre.map(e => (
-          <div>
-            <p>{e}</p>
+          <div className={styles.btnYEl}>
+            <div className={styles.genre}>{e}</div>
             <button className={styles.botonX} onClick={() => handleDelete(e)}>
               X
             </button>
           </div>
         ))}
-        <p className='stlyles.lista'>Platforms selected:</p>
+        <p className={styles.lista}>Platforms selected:</p>
         {input.platforms.map(e => (
-          <div >
-            <p>{e}</p>
+          <div className={styles.btnYEl}>
+            <div className={styles.platform}>{e}</div>
             <button className={styles.botonX} onClick={() => handleDelete(e)}>
               X
             </button>
