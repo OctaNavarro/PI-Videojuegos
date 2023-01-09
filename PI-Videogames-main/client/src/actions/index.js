@@ -1,8 +1,12 @@
 import axios from 'axios'
+import dotenv from "dotenv"
+dotenv.config()
+
+axios.defaults.baseURL = process.env.URL_BACK || "http://localhost:3001/"
 
 export function getVideogames() {
   return async function (dispatch) {
-    let json = await axios.get('http://localhost:3001/videogames')
+    let json = await axios.get('/videogames')
     return dispatch({
       type: 'GET_VIDEOGAMES',
       payload: json.data,
@@ -14,7 +18,7 @@ export function getDetail(id) {
   return async function (dispatch) {
     console.log('detail')
     try {
-      let json = await axios.get('http://localhost:3001/videogame/' + id)
+      let json = await axios.get('/videogame/' + id)
       return dispatch({
         type: 'GET_DETAIL',
         payload: json.data,
@@ -30,7 +34,7 @@ export function getNameVideogames(name) {
     console.log('name')
     try {
       let json = await axios.get(
-        'http://localhost:3001/videogames?name=' + name
+        '/videogames?name=' + name
       )
       return dispatch({
         type: 'GET_NAME_VIDEOGAMES',
@@ -45,7 +49,7 @@ export function getNameVideogames(name) {
 export function getGenres() {
   return async function (dispatch) {
     try {
-      let json = await axios.get('http://localhost:3001/genre')
+      let json = await axios.get('/genre')
       return dispatch({
         type: 'GET_GENRES_VIDEOGAMES',
         payload: json.data,
@@ -59,7 +63,7 @@ export function getGenres() {
 export function getPlatforms() {
   return async function (dispatch) {
     try {
-      let json = await axios.get('http://localhost:3001/platforms')
+      let json = await axios.get('/platforms')
       return dispatch({
         type: 'GET_PLATFORMS_VIDEOGAMES',
         payload: json.data,
@@ -73,7 +77,7 @@ export function getPlatforms() {
 export function postVideogames(payload) {
   return async function (dispatch) {
     const response = await axios.post(
-      'http://localhost:3001/videogames',
+      '/videogames',
       payload
     )
     return response
