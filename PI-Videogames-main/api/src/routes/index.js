@@ -203,6 +203,20 @@ router.get('/videogame/:id', async (req, res) => {
   }
 })
 
+
+//Ruta post de generos
+router.post('/createGenre', async(req, res)=>{
+  let{
+    name
+  } =req.body
+
+  let genreCreated = await Genre.create({
+    name
+  })
+  res.send('Genre created successfully')
+})
+
+
 //Ruta POST/ videogames
 router.post('/videogames', async (req, res) => {
   let {

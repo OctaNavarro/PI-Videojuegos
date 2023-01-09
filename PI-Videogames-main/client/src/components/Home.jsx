@@ -21,7 +21,7 @@ import styles from './Home.module.css'
 export default function Home() {
   const dispatch = useDispatch()
   const allVideogames = useSelector(state => state.videogames)
-  const [currentPage, setCurrentPage] = useState(1)
+  const [currentPage, setCurrentPage] = useState(1)   
   const [vgPerPage, setVgPerPage] = useState(15)
   const indexOfLastVg = currentPage * vgPerPage
   const indexOfFirstVg = indexOfLastVg - vgPerPage
@@ -31,9 +31,6 @@ export default function Home() {
   const paginado = pageNumber => {
     setCurrentPage(pageNumber)
   }
-
-  
-  
 
   function handleClick(e) {
     e.preventDefault()
@@ -71,7 +68,6 @@ export default function Home() {
   }, [])
 
   return (
-
     <div className={styles.bg}>
       <div className={styles.nav}>
         <button
@@ -169,7 +165,25 @@ export default function Home() {
             )
           })
         ) : (
-          <div className = {styles.loading}>Loading...</div>
+          <div className={styles.loading}>
+            <div className={styles.loader}>
+              <svg viewBox='0 0 80 80'>
+                <circle id='test' cx='40' cy='40' r='32'></circle>
+              </svg>
+            </div>
+
+            <div className={`${styles.loader} ${styles.triangle}`}>
+              <svg viewBox='0 0 86 80'>
+                <polygon points='43 8 79 72 7 72'></polygon>
+              </svg>
+            </div>
+
+            <div className={styles.loader}>
+              <svg viewBox='0 0 80 80'>
+                <rect x='8' y='8' width='64' height='64'></rect>
+              </svg>
+            </div>
+          </div>
         )}
       </div>
       <Paginado
