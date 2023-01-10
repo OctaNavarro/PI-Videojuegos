@@ -21,7 +21,7 @@ import styles from './Home.module.css'
 export default function Home() {
   const dispatch = useDispatch()
   const allVideogames = useSelector(state => state.videogames)
-  const [currentPage, setCurrentPage] = useState(1)   
+  const [currentPage, setCurrentPage] = useState(1)
   const [vgPerPage, setVgPerPage] = useState(15)
   const indexOfLastVg = currentPage * vgPerPage
   const indexOfFirstVg = indexOfLastVg - vgPerPage
