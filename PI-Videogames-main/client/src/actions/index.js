@@ -1,8 +1,9 @@
 import axios from 'axios'
-import dotenv from "dotenv"
-dotenv.config()
+// import dotenv from "dotenv"
+// dotenv.config()
 
-axios.defaults.baseURL = 'pi-videojuegos-production.up.railway.app' || process.env.URL_BACK || "http://localhost:3001/"
+//axios.defaults.baseURL = 'pi-videojuegos-production.up.railway.app' || process.env.URL_BACK || "http://localhost:3001/"
+axios.defaults.baseURL = 'pi-videojuegos-production.up.railway.app' || "http://localhost:3001/"
 
 export function getVideogames() {
   return async function (dispatch) {
