@@ -3,7 +3,7 @@ import axios from 'axios'
 // import dotenv from "dotenv"
 
 // dotenv.config()
-axios.defaults.baseURL = 'pi-videojuegos-production.up.railway.app' || "http://localhost:3001/"
+axios.defaults.baseURL = 'https://pi-videojuegos-production.up.railway.app/' || "http://localhost:3001/"
 
 
 export function getVideogames() {
