@@ -21,8 +21,7 @@ function validate(input) {
   } else if (!input.released || input.released === '') {
     errors.description = 'Date is required'
     errors.button = true
-  }
-  else if (
+  } else if (
     !input.rating ||
     0 > input.rating ||
     input.rating > 5 ||
@@ -31,7 +30,7 @@ function validate(input) {
     errors.rating = 'Rating must be a number between 0 and 5'
     errors.button = true
     console.log(input.genre)
-  } 
+  }
   return errors
 }
 
@@ -39,7 +38,8 @@ export default function VideogameCreate() {
   const dispatch = useDispatch()
   const history = useHistory()
   const genres = useSelector(state => state.genres)
-  const platforms = useSelector(state => state.platforms)
+  const platforms = []
+  useSelector(state => platforms.push(state.platforms))
 
   const [errors, setErrors] = useState({})
 
@@ -142,7 +142,7 @@ export default function VideogameCreate() {
           <div>
             <label>Name:</label>
             <input
-              required 
+              required
               type='text'
               value={input.name}
               name='name'
@@ -175,7 +175,7 @@ export default function VideogameCreate() {
             <label>Rating:</label>
             <input
               type='number'
-              min = '1'
+              min='1'
               value={input.rating}
               name='rating'
               onChange={handleChange}
@@ -217,9 +217,11 @@ export default function VideogameCreate() {
             <option disabled selected>
               -----------
             </option>
-            {platforms.map(platforms => (
-              <option value={platforms.name}>{platforms.name}</option>
-            ))}
+            {platforms.length > 0
+              ? platforms.map(platforms => (
+                  <option value={platforms.name}>{platforms.name}</option>
+                ))
+              : null}
           </select>
           {errors.platforms && (
             <p className={styles.error}>{errors.platforms}</p>
