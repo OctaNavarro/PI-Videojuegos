@@ -38,8 +38,10 @@ export default function VideogameCreate() {
   const dispatch = useDispatch()
   const history = useHistory()
   const genres = useSelector(state => state.genres)
-  const platforms = []
-  useSelector(state => platforms.push(state.platforms))
+  let platforms = []
+  useSelector(state => state.platforms?.map(e=>platforms.push(e)))
+
+  console.log(platforms)
 
   const [errors, setErrors] = useState({})
 
@@ -203,9 +205,7 @@ export default function VideogameCreate() {
 
           <h4>Genres: </h4>
           <select onChange={e => handleSelectGenre(e)}>
-            <option disabled selected>
-              -----------
-            </option>
+            <option disabled>-----------</option>
             {genres.map(genre => (
               <option value={genre.name}>{genre.name}</option>
             ))}
@@ -214,13 +214,9 @@ export default function VideogameCreate() {
 
           <h4>Platforms: </h4>
           <select onChange={e => handleSelectPlatform(e)}>
-            <option disabled selected>
-              -----------
-            </option>
+            <option disabled>-----------</option>
             {platforms.length > 0
-              ? platforms.map(e => (
-                  <option value={e.name}>{e.name}</option>
-                ))
+              ? platforms.map(e => <option value={e.name}>{e.name}</option>)
               : null}
           </select>
           {errors.platforms && (
