@@ -25,7 +25,10 @@ export default function Home() {
   const [vgPerPage, setVgPerPage] = useState(15)
   const indexOfLastVg = currentPage * vgPerPage
   const indexOfFirstVg = indexOfLastVg - vgPerPage
-  const currentVgs = allVideogames.slice(indexOfFirstVg, indexOfLastVg)
+  let currentVgs = []
+  if (Array.isArray(allVideogames)) {
+    currentVgs = allVideogames.slice(indexOfFirstVg, indexOfLastVg)
+  }
   const [render, setRender] = useState('')
 
   const paginado = pageNumber => {
@@ -85,9 +88,7 @@ export default function Home() {
         </div>
         <div>
           <select onChange={e => handleSortName(e)} className={styles.selector}>
-            <option disabled>
-              Alphabetical order
-            </option>
+            <option disabled>Alphabetical order</option>
             <option value='asc'>A to Z</option>
             <option value='desc'>Z to A</option>
           </select>
@@ -95,9 +96,7 @@ export default function Home() {
             onChange={e => handleSortRating(e)}
             className={styles.selector}
           >
-            <option disabled>
-              Rating order
-            </option>
+            <option disabled>Rating order</option>
             <option value='worst'>Worst to best</option>
             <option value='best'>Best to worst</option>
           </select>
@@ -105,9 +104,7 @@ export default function Home() {
             onChange={e => handleFilterGenre(e)}
             className={styles.selector}
           >
-            <option disabled>
-              Genre filter
-            </option>
+            <option disabled>Genre filter</option>
             <option value='All'>ALL</option>
             <option value='Action'>ACTION</option>
             <option value='Adventure'>ADVENTURE</option>
@@ -133,9 +130,7 @@ export default function Home() {
             onChange={e => handleFilterCreated(e)}
             className={styles.selector}
           >
-            <option disabled>
-              Status filter
-            </option>
+            <option disabled>Status filter</option>
             <option value='All'>All</option>
             <option value='Existing'>Exisisting</option>
             <option value='Created'>Created</option>
@@ -152,13 +147,15 @@ export default function Home() {
       <div className={styles.cardContainer}>
         {currentVgs.length > 0 ? (
           currentVgs.map(e => {
-            <Link to={'/home/' + e.id}>
-              <VgCard
-                name={e.name}
-                image={e.image.length > 0 ? e.image : img}
-                genre={e.genres.map(e => e.name + '  ')}
-              />
-            </Link>
+            return (
+              <Link to={'/home/' + e.id}>
+                <VgCard
+                  name={e.name}
+                  image={e.image.length > 0 ? e.image : img}
+                  genre={e.genres.map(e => e.name + '  ')}
+                />
+              </Link>
+            )
           })
         ) : (
           <div className={styles.loading}>
