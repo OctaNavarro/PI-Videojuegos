@@ -150,9 +150,9 @@ export default function Home() {
         paginado={paginado}
       />
       <div className={styles.cardContainer}>
-        {currentVgs.length > 0 ? 
-          currentVgs.map(e => {
-            <Link to={'/home/' + e.id}>
+        {currentVgs?.length > 0 ? (
+          currentVgs?.map(e => {
+            ;<Link to={'/home/' + e.id}>
               <VgCard
                 name={e.name}
                 image={e.image.length > 0 ? e.image : img}
@@ -160,7 +160,7 @@ export default function Home() {
               />
             </Link>
           })
-        : 
+        ) : (
           <div className={styles.loading}>
             <div className={styles.loader}>
               <svg viewBox='0 0 80 80'>
@@ -180,7 +180,7 @@ export default function Home() {
               </svg>
             </div>
           </div>
-        }
+        )}
       </div>
       <Paginado
         vgPerPage={vgPerPage}
