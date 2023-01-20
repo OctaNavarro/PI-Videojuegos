@@ -218,8 +218,8 @@ export default function VideogameCreate() {
               -----------
             </option>
             {platforms.length > 0
-              ? platforms.map(platforms => (
-                  <option value={platforms.name}>{platforms.name}</option>
+              ? platforms.map(e => (
+                  <option value={e.name}>{e.name}</option>
                 ))
               : null}
           </select>
