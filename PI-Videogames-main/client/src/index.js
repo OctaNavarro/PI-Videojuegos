@@ -8,7 +8,7 @@ import { store } from './Store'
 import dotenv from "dotenv"
 
 dotenv.config()
-axios.defaults.baseURL = process.env.URL_BACK || "http://localhost:3001/"
+axios.defaults.baseURL = 'pi-videojuegos-production.up.railway.app/' || "http://localhost:3001/"
 
 ReactDOM.render(
   <Provider store={store}>
