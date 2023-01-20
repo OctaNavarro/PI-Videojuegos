@@ -206,7 +206,7 @@ export default function VideogameCreate() {
             <option disabled selected>
               -----------
             </option>
-            {genres?.map(genre => (
+            {genres.map(genre => (
               <option value={genre.name}>{genre.name}</option>
             ))}
           </select>
@@ -217,7 +217,7 @@ export default function VideogameCreate() {
             <option disabled selected>
               -----------
             </option>
-            {platforms?.map(platforms => (
+            {platforms.map(platforms => (
               <option value={platforms.name}>{platforms.name}</option>
             ))}
           </select>

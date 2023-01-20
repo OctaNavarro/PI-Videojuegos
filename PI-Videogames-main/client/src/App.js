@@ -4,6 +4,7 @@ import LandingPage from './components/LandingPage'
 import Home from './components/Home'
 import VideogameCreate from './components/VideogameCreate'
 import Detail from './components/Detail'
+import React from 'react'
 
 
 function App() {
