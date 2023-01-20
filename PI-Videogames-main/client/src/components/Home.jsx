@@ -85,7 +85,7 @@ export default function Home() {
         </div>
         <div>
           <select onChange={e => handleSortName(e)} className={styles.selector}>
-            <option disabled selected>
+            <option disabled>
               Alphabetical order
             </option>
             <option value='asc'>A to Z</option>
@@ -95,7 +95,7 @@ export default function Home() {
             onChange={e => handleSortRating(e)}
             className={styles.selector}
           >
-            <option disabled selected>
+            <option disabled>
               Rating order
             </option>
             <option value='worst'>Worst to best</option>
@@ -105,7 +105,7 @@ export default function Home() {
             onChange={e => handleFilterGenre(e)}
             className={styles.selector}
           >
-            <option disabled selected>
+            <option disabled>
               Genre filter
             </option>
             <option value='All'>ALL</option>
@@ -133,7 +133,7 @@ export default function Home() {
             onChange={e => handleFilterCreated(e)}
             className={styles.selector}
           >
-            <option disabled selected>
+            <option disabled>
               Status filter
             </option>
             <option value='All'>All</option>
@@ -150,9 +150,9 @@ export default function Home() {
         paginado={paginado}
       />
       <div className={styles.cardContainer}>
-        {currentVgs?.length > 0 ? (
-          currentVgs?.map(e => {
-            ;<Link to={'/home/' + e.id}>
+        {currentVgs.length > 0 ? (
+          currentVgs.map(e => {
+            <Link to={'/home/' + e.id}>
               <VgCard
                 name={e.name}
                 image={e.image.length > 0 ? e.image : img}
