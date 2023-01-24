@@ -1,13 +1,14 @@
 ﻿# PI-Videojuegos
 
 Objetivos del Proyecto de Octa:
+
   ➛ Construir una App utlizando React, Redux, Node y Sequelize.
 
   ➛ Aprender mejores prácticas.
 
   ➛ Aprender y practicar el workflow de GIT.
   
-Deployed version: octa-pi.vercel.app  
+Deployed version: octa-pi.vercel.app  (No tiene diseño responsive, por lo que no se ve correctamente en dispositivos móviles)
   
 ## Imágenes de muestra
 
