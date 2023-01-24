@@ -2,8 +2,12 @@
 
 Objetivos del Proyecto de Octa:
   ➛ Construir una App utlizando React, Redux, Node y Sequelize.
+
   ➛ Aprender mejores prácticas.
+
   ➛ Aprender y practicar el workflow de GIT.
+  
+Deployed version: octa-pi.vercel.app  
   
 ## Imágenes de muestra
 
