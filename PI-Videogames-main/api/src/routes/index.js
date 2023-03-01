@@ -7,6 +7,7 @@ const router = Router()
 const { Videogame, Genre, Platforms } = require('../db')
 
 // Funciones para traer info de API y DB
+//Hi there
 const getApiInfo = async name => {
   let videojuegos = []
   let url = `https://api.rawg.io/api/games?key=${API_KEY}&page_size=40`
